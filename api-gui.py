@@ -1,10 +1,8 @@
 import tkinter as tk
-from tkinter import ttk
 import requests
 from api import NasaImageFetcher
 from PIL import Image, ImageTk
 import io
-import urllib.request
 from functools import partial
 
 #kolor tła
@@ -101,9 +99,10 @@ window.configure(bg=BG_COLOR)
 
 #Layout siatki
 for r in range(4):
-    window.rowconfigure(r, weight=1)
-for c in range(6):
-    window.columnconfigure(c, weight=1)
+    if r >= 4:
+        window.rowconfigure(r, weight=1)
+    else:
+        window.columnconfigure(r, weight=1)
 
 #inputy
 input_frame = tk.Frame(master=window, bg=BG_COLOR)
@@ -115,7 +114,8 @@ text.grid(row=0, column=1, padx=5, pady=5)
 entry = tk.Entry(input_frame, width=30, fg=FG_COLOR, bg=BG_COLOR, insertbackground=FG_COLOR)
 entry.grid(row=0, column=2, padx=5, pady=5)
 
-button = tk.Button(master = input_frame, text="Szukaj", command = search_image, fg=FG_COLOR, bg=BG_COLOR, activebackground=BG_COLOR, activeforeground=FG_COLOR, borderwidth=1)
+button = tk.Button(master = input_frame, text="Szukaj", command = search_image, fg=FG_COLOR, bg=BG_COLOR,
+                    activebackground=BG_COLOR, activeforeground=FG_COLOR, borderwidth=1)
 button.grid(row=0, column=3, padx=5, pady=5)
 
 #output
@@ -128,7 +128,8 @@ text_output.grid(row=1, column=0, padx=5, pady=5)
 canvas = tk.Canvas(window, bg=BG_COLOR, highlightthickness=0)
 canvas.grid(row=1, column=0, columnspan=4, rowspan=3, sticky="nsew")
 
-scrollbar = tk.Scrollbar(window, orient="vertical", command=canvas.yview, bg=BG_COLOR, troughcolor=BG_COLOR, activebackground=BG_COLOR, highlightbackground=BG_COLOR)
+scrollbar = tk.Scrollbar(window, orient="vertical", command=canvas.yview, bg=BG_COLOR, troughcolor=BG_COLOR,
+                          activebackground=BG_COLOR, highlightbackground=BG_COLOR)
 scrollbar.grid(row=1, column=4, rowspan=3, sticky="ns")
 
 canvas.configure(yscrollcommand=scrollbar.set)
